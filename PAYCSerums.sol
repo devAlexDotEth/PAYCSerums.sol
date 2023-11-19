@@ -40,7 +40,7 @@ import "./ERC20Token.sol";
 
 /// @custom:security-contact alex@bearified.xyz
 contract PAYCSerums is Initializable, ERC1155Upgradeable, OwnableUpgradeable, ERC1155PausableUpgradeable, ERC1155BurnableUpgradeable, ERC1155SupplyUpgradeable, UUPSUpgradeable {
-    uint256 public costPerSerum = 420000000 * (10**18); // This represents 420,000,000 Sheesh tokens assuming 18 decimal places
+    uint256 public costPerSerum; // Cost per serum, initialized in the initializer
     string private _contractURI;
     mapping(uint256 => uint256) public maxSupplyPerTokenId; // Max supply cap for each token ID
 
@@ -51,12 +51,15 @@ contract PAYCSerums is Initializable, ERC1155Upgradeable, OwnableUpgradeable, ER
 
     function initialize(address initialOwner) initializer public {
         __ERC1155_init("https://ipfs.io/ipfs/QmcbrRSmTN15uhVRyoE2E15uwAsP5N2AhfZaunEfkWM6tN/1.json");
-       __Ownable_init(initialOwner);
+        __Ownable_init(initialOwner);
         __ERC1155Pausable_init_unchained();
         __ERC1155Burnable_init_unchained();
         __ERC1155Supply_init_unchained();
         __UUPSUpgradeable_init();
         transferOwnership(initialOwner); // Transfer ownership to the initial owner
+
+        // Initialize cost per serum here
+        costPerSerum = 420000000 * (10**18); // This represents 420,000,000 Sheesh tokens
     }
 
     function setURI(string memory newuri) public onlyOwner {
