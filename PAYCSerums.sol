@@ -84,7 +84,7 @@ contract PAYCSerums is Initializable, ERC1155Upgradeable, OwnableUpgradeable, ER
 
     function purchaseSerum(uint256 serumId, uint256 serumAmount) public {
         uint256 price = serumAmount * costPerSerum;
-        AuraDropERC20 sheeshToken = AuraDropERC20(0x64C061c5BcA63f017Cd6bA3B26101965b6b0c0aC);
+        AuraDropERC20 sheeshToken = AuraDropERC20(0xbB4f3aD7a2cf75d8EfFc4f6D7BD21d95F06165ca);
         require(sheeshToken.transferFrom(msg.sender, address(this), price), "Transfer failed");
         require(totalSupply(serumId) + serumAmount <= maxSupplyPerTokenId[serumId], "Exceeds max supply for token id");
         _mint(msg.sender, serumId, serumAmount, "");
@@ -92,7 +92,7 @@ contract PAYCSerums is Initializable, ERC1155Upgradeable, OwnableUpgradeable, ER
 
     function burnMutantsAndGetSerum(uint256[] memory mutantIds) public {
         require(mutantIds.length == 5, "Exactly 5 mutants required");
-        IERC721 PAYCMutants = IERC721(0x06F832645dc8D1069727C5FA28fFEf651f4d2120);
+        IERC721 PAYCMutants = IERC721(0x0802f7a7c48426e972a30aaab3c2f35c14a35bc8);
         for (uint256 i = 0; i < mutantIds.length; i++) {
             require(PAYCMutants.ownerOf(mutantIds[i]) == msg.sender, "Caller does not own this mutant");
             PAYCMutants.safeTransferFrom(msg.sender, address(0x000000000000000000000000000000000000dEaD), mutantIds[i]);
